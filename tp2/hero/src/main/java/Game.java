@@ -1,4 +1,7 @@
-import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -12,16 +15,17 @@ public class Game {
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         this.screen = new TerminalScreen(terminal);
-        this.hero = new Hero(10, 10);
+        this.arena = new Arena(terminal.getTerminalSize().getColumns(), terminal.getTerminalSize().getRows());
 
         this.screen.setCursorPosition(null);   // we don't need a cursor
         this.screen.startScreen();             // screens must be started
         this.screen.doResizeIfNecessary();     // resize screen if necessary
+
     }
 
     private void draw() throws IOException {
         screen.clear();
-        this.hero.draw(this.screen);
+        this.arena.draw(screen.newTextGraphics());
         screen.refresh();
     }
 
@@ -36,22 +40,13 @@ public class Game {
         }
     }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
-
     private void processKey(KeyStroke key) throws IOException {
-        switch (key.getKeyType()) {
-            case ArrowUp -> moveHero(this.hero.moveUp());
-            case ArrowDown -> moveHero(this.hero.moveDown());
-            case ArrowLeft -> moveHero(this.hero.moveLeft());
-            case ArrowRight -> moveHero(this.hero.moveRight());
-        }
+        arena.processKey(key);
         if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
             screen.close();
         }
     }
 
     private final Screen screen;
-    private final Hero hero;
+    private final Arena arena;
 }
