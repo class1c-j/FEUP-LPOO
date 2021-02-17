@@ -11,16 +11,17 @@ import java.io.IOException;
 public class Game {
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        screen = new TerminalScreen(terminal);
+        this.screen = new TerminalScreen(terminal);
+        this.hero = new Hero(10, 10);
 
-        screen.setCursorPosition(null);   // we don't need a cursor
-        screen.startScreen();             // screens must be started
-        screen.doResizeIfNecessary();     // resize screen if necessary
+        this.screen.setCursorPosition(null);   // we don't need a cursor
+        this.screen.startScreen();             // screens must be started
+        this.screen.doResizeIfNecessary();     // resize screen if necessary
     }
 
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, new TextCharacter('X'));
+        this.hero.draw(this.screen);
         screen.refresh();
     }
 
@@ -37,10 +38,10 @@ public class Game {
 
     private void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
-            case ArrowUp -> this.y -= 1;
-            case ArrowDown -> this.y += 1;
-            case ArrowLeft -> this.x -= 1;
-            case ArrowRight -> this.x += 1;
+            case ArrowUp -> this.hero.moveUp();
+            case ArrowDown -> this.hero.moveDown();
+            case ArrowLeft -> this.hero.moveLeft();
+            case ArrowRight -> this.hero.moveRight();
         }
         if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
             screen.close();
@@ -48,6 +49,5 @@ public class Game {
     }
 
     private final Screen screen;
-    private int x = 10;
-    private int y = 10;
+    private Hero hero;
 }
