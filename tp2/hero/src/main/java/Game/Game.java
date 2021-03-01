@@ -1,7 +1,5 @@
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
+package Game;
+
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -12,6 +10,9 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
+    private final Screen screen;
+    private final Arena arena;
+
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         this.screen = new TerminalScreen(terminal);
@@ -54,7 +55,4 @@ public class Game {
             screen.close();
         }
     }
-
-    private final Screen screen;
-    private final Arena arena;
 }

@@ -1,28 +1,34 @@
-import com.googlecode.lanterna.*;
+package Game;
+
+import Element.Coin;
+import Element.Hero;
+import Element.Monster;
+import Element.Wall;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.screen.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Arena {
+    private final int width;
+    private final int height;
+    private final Hero hero;
+    private final List<Wall> walls;
+    private final List<Coin> coins;
+    private final List<Monster> monsters;
+
     public Arena(int width, int height) {
         this.width = width;
         this.height = height;
-        this.hero = new Hero(10,  10);
+        this.hero = new Hero(10, 10);
         this.walls = createWalls();
         this.coins = createCoins();
         this.monsters = createMonsters();
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void draw(TextGraphics graphics) {
@@ -59,7 +65,7 @@ public class Arena {
 
     private boolean canMove(Position position) {
         for (Wall w : this.walls) {
-            if(w.getPosition().equals(position)) {
+            if (w.getPosition().equals(position)) {
                 return false;
             }
         }
@@ -124,11 +130,4 @@ public class Arena {
         }
         return false;
     }
-
-    private final int width;
-    private final int height;
-    private final Hero hero;
-    private final List<Wall> walls;
-    private final List<Coin> coins;
-    private final List<Monster> monsters;
 }
