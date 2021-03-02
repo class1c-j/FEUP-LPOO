@@ -36,14 +36,12 @@ public class Game {
             KeyStroke key = screen.readInput();
             processKey(key);
             if (arena.verifyMonsterCollisions()) {
-                screen.close();
-                break;
+                if (!arena.checkHeroAlive()) {
+                    screen.close();
+                    break;
+                }
             }
             if (key.getKeyType() == KeyType.EOF) {
-                break;
-            }
-            if (arena.verifyMonsterCollisions()) {
-                screen.close();
                 break;
             }
         }

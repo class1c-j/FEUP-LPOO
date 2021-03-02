@@ -8,9 +8,16 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 
 public class Hero extends Element {
 
-    public Hero(int x, int y) { super(x, y); }
+    private int health;
 
-    public Position moveUp() { return new Position(getPosition().getX(), getPosition().getY() - 1); }
+    public Hero(int x, int y) {
+        super(x, y);
+        health = 100;
+    }
+
+    public Position moveUp() {
+        return new Position(getPosition().getX(), getPosition().getY() - 1);
+    }
 
     public Position moveDown() {
         return new Position(getPosition().getX(), getPosition().getY() + 1);
@@ -22,6 +29,14 @@ public class Hero extends Element {
 
     public Position moveRight() {
         return new Position(getPosition().getX() + 1, getPosition().getY());
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public void draw(TextGraphics graphics) {
