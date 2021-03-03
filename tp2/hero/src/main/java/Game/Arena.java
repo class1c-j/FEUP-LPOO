@@ -158,7 +158,6 @@ public class Arena {
         for (Jumper jumper : this.jumpers) {
             if (jumper.getPosition().equals(this.hero.getPosition())) {
                 hero.setHealth(hero.getHealth() - 20);
-                System.out.format("Collision! current health %d\n", hero.getHealth());
                 return true;
             }
         }
@@ -167,7 +166,11 @@ public class Arena {
     }
 
     public boolean checkHeroAlive() {
-        return hero.getHealth() > 0;
+        return this.hero.getHealth() > 0;
+    }
+
+    public boolean checkLevelCompleted() {
+        return this.coins.isEmpty();
     }
 
 }

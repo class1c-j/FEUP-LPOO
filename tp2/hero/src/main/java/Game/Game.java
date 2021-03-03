@@ -1,5 +1,9 @@
 package Game;
 
+
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -37,9 +41,15 @@ public class Game {
             processKey(key);
             if (arena.verifyMonsterCollisions()) {
                 if (!arena.checkHeroAlive()) {
+                    showGameOver();
                     screen.close();
                     break;
                 }
+            }
+            if (arena.checkLevelCompleted()) {
+                showLevelCompletedScreen();
+                screen.close();
+                break;
             }
             if (key.getKeyType() == KeyType.EOF) {
                 break;
@@ -53,4 +63,41 @@ public class Game {
             screen.close();
         }
     }
+
+    private void showGameOver() throws IOException {
+        this.screen.clear();
+        TextGraphics graphics = this.screen.newTextGraphics();
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#ff0000"));
+        graphics.fill(' ');
+        graphics.putString(35, 10, "Game Over", SGR.BOLD);
+        graphics.putString(29, 12, "Press SPACE to leave", SGR.BOLD);
+        this.screen.refresh();
+
+        while (true) {
+            KeyStroke keyStroke = screen.readInput();
+            if (keyStroke.getKeyType() == KeyType.EOF || (keyStroke.getKeyType() == KeyType.Character && keyStroke.getCharacter() == ' ')) {
+                break;
+            }
+        }
+
+    }
+
+    private void showLevelCompletedScreen() throws IOException {
+        this.screen.clear();
+        TextGraphics graphics = this.screen.newTextGraphics();
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#00ff00"));
+        graphics.fill(' ');
+        graphics.putString(35, 10, "You Won", SGR.BOLD);
+        graphics.putString(29, 12, "Press SPACE to leave", SGR.BOLD);
+        this.screen.refresh();
+
+        while (true) {
+            KeyStroke keyStroke = screen.readInput();
+            if (keyStroke.getKeyType() == KeyType.EOF || (keyStroke.getKeyType() == KeyType.Character && keyStroke.getCharacter() == ' ')) {
+                break;
+            }
+        }
+
+    }
+
 }
