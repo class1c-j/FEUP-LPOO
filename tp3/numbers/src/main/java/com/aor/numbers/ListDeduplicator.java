@@ -7,12 +7,7 @@ import java.util.List;
  * An utility class that removes duplicate numbers
  * from a list.
  */
-public class ListDeduplicator implements IListDeduplicator {
-    private final List<Integer> list;
-
-    public ListDeduplicator(List<Integer> list) {
-        this.list = list;
-    }
+public class ListDeduplicator {
 
     /**
      * Removes duplicate numbers from a list.
@@ -20,9 +15,9 @@ public class ListDeduplicator implements IListDeduplicator {
      * but withou duplicates. The order of the numbers might
      * change.
      */
-    public List<Integer> deduplicate(IListSorter listSorter) {
-
-        List<Integer> sorted = listSorter.sort();
+    public List<Integer> deduplicate(List<Integer> list) {
+        ListSorter listSorter = new ListSorter();
+        List<Integer> sorted = listSorter.sort(list);
         List<Integer> unique = new ArrayList<>();
 
         Integer last = null;

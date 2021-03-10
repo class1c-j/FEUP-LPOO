@@ -1,90 +1,49 @@
 package com.aor.numbers;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ListAggregatorTest {
-
-    private List<Integer> list;
-
-    @BeforeEach
-    public void setup() {
-        this.list = new ArrayList<>();
-        this.list.add(1);
-        this.list.add(2);
-        this.list.add(4);
-        this.list.add(2);
-        this.list.add(5);
-    }
-
     @Test
     public void sum() {
+        List<Integer> list = Arrays.asList(1,2,4,2,5);
 
-        ListAggregator aggregator = new ListAggregator(this.list);
-
-        int sum = aggregator.sum();
+        ListAggregator aggregator = new ListAggregator();
+        int sum = aggregator.sum(list);
 
         Assertions.assertEquals(14, sum);
     }
 
     @Test
     public void max() {
+        List<Integer> list = Arrays.asList(1,2,4,2,5);
 
-        ListAggregator aggregator = new ListAggregator(this.list);
-
-        int max = aggregator.max();
+        ListAggregator aggregator = new ListAggregator();
+        int max = aggregator.max(list);
 
         Assertions.assertEquals(5, max);
     }
 
     @Test
-    public void max_bug_7263() {
-        Integer[] numbers = {-1, -4, -5};
-        List<Integer> bugList = Arrays.asList(numbers);
-
-        ListAggregator aggregator = new ListAggregator(bugList);
-
-        int max = aggregator.max();
-
-        Assertions.assertEquals(-1, max);
-    }
-
-    @Test
     public void min() {
+        List<Integer> list = Arrays.asList(1,2,4,2,5);
 
-        ListAggregator aggregator = new ListAggregator(this.list);
-
-        int min = aggregator.min();
+        ListAggregator aggregator = new ListAggregator();
+        int min = aggregator.min(list);
 
         Assertions.assertEquals(1, min);
     }
 
     @Test
     public void distinct() {
+        List<Integer> list = Arrays.asList(1,2,4,2,5);
 
-        class ListDeduplicatorStub implements IListDeduplicator {
+        ListAggregator aggregator = new ListAggregator();
+        int distinct = aggregator.distinct(list);
 
-            @Override
-            public List<Integer> deduplicate(IListSorter listSorter) {
-                Integer[] stubNumbers = {1, 2, 4};
-                return Arrays.asList(stubNumbers);
-            }
-
-        }
-
-        Integer[] numbers = {1, 2, 4, 2};
-        List<Integer> numberList = Arrays.asList(numbers);
-
-        ListDeduplicatorStub stub = new ListDeduplicatorStub();
-        ListAggregator aggregator = new ListAggregator(numberList);
-
-        int distinct = aggregator.distinct(stub);
-
-        Assertions.assertEquals(3, distinct);
+        Assertions.assertEquals(4, distinct);
     }
 }
