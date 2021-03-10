@@ -48,7 +48,15 @@ public class ListAggregatorTest {
         List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2, 5});
 
         ListAggregator aggregator = new ListAggregator();
-        int distinct = aggregator.distinct(list);
+
+        class StubListDeduplicator implements GenericListDeduplicator {
+            public List<Integer> deduplicate(List<Integer> list, GenericListSorter listSorter) {
+                return Arrays.asList(1, 2, 4, 5);
+            }
+        }
+
+        GenericListDeduplicator deduplicator = new StubListDeduplicator();
+        int distinct = aggregator.distinct(list, deduplicator);
 
         Assertions.assertEquals(4, distinct);
     }
@@ -62,5 +70,25 @@ public class ListAggregatorTest {
 
         Assertions.assertEquals(-1, max);
     }
+
+    @Test
+    public void distinct_bug_8726() {
+        List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2});
+
+        ListAggregator aggregator = new ListAggregator();
+
+        class StubListDeduplicator implements GenericListDeduplicator {
+            public List<Integer> deduplicate(List<Integer> list, GenericListSorter listSorter) {
+                return Arrays.asList(1, 2, 4);
+            }
+        }
+
+        GenericListDeduplicator deduplicator = new StubListDeduplicator();
+        int distinct = aggregator.distinct(list, deduplicator);
+
+        Assertions.assertEquals(3, distinct);
+
+    }
+
 
 }
