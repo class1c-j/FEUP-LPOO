@@ -52,4 +52,15 @@ public class ListAggregatorTest {
 
         Assertions.assertEquals(4, distinct);
     }
+
+    @Test
+    public void max_bug_7263() {
+        List<Integer> list = setupHelper(new Integer[]{-1, -4, -5});
+
+        ListAggregator aggregator = new ListAggregator();
+        int max = aggregator.max(list);
+
+        Assertions.assertEquals(-1, max);
+    }
+
 }
