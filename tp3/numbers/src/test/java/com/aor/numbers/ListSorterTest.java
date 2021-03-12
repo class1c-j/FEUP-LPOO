@@ -21,6 +21,10 @@ public class ListSorterTest {
         List<Integer> sorted = sorter.sort(list);
 
         Assertions.assertEquals(expected, sorted);
+
+        // mutations are not actually killed, for that we would have to
+        // change the actual code of the method.
+
     }
 
     @Test

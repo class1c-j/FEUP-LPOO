@@ -10,6 +10,7 @@ class PositiveFilterTest {
         PositiveFilter positiveFilter = new PositiveFilter();
 
         Assertions.assertTrue(positiveFilter.accept(3));
+        Assertions.assertFalse(positiveFilter.accept(0));
         Assertions.assertFalse(positiveFilter.accept(-3));
     }
 }

@@ -28,22 +28,29 @@ public class ListAggregatorTest {
 
     @Test
     public void max() {
-        List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2, 5});
+        List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2, 5, 5});
 
         ListAggregator aggregator = new ListAggregator();
         int max = aggregator.max(list);
 
         Assertions.assertEquals(5, max);
+
+        // mutations are not actually killed, for that we would have to
+        // change the actual code of the method.
+
     }
 
     @Test
     public void min() {
-        List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2, 5});
+        List<Integer> list = setupHelper(new Integer[]{1, 2, 4, 2, 5, 1});
 
         ListAggregator aggregator = new ListAggregator();
         int min = aggregator.min(list);
 
         Assertions.assertEquals(1, min);
+
+        // mutations are not actually killed, for that we would have to
+        // change the actual code of the method.
     }
 
     @Test
