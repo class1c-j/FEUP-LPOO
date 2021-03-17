@@ -1,4 +1,4 @@
-public class Square extends Shape {
+public class Square implements Shape {
     private double side;
 
     public Square(double side) {
@@ -7,5 +7,10 @@ public class Square extends Shape {
 
     public double getSide() {
         return side;
+    }
+
+    @Override
+    public double getArea() {
+        return  Math.pow(side, 2);
     }
 }
