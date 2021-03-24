@@ -35,4 +35,5 @@ public abstract class Bar {
             if (isHappyHour()) observer.happyHourStarted(this);
             else observer.happyHourEnded(this);
     }
+
 }
